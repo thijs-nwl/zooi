@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>app</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  <body id="body">
+
+    <div id="Pos1">
+      <div class="dataView">
+        <h1>{{min}}</h1>
+        <table>
+          <tr>
+            <th>Pair</th>
+            <th>Time</th> <!-- in js this is called Date -->
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Up</th>
+            <th>Low</th>
+            <th>Base</th>
+            <th>Rsi</th>
+            <th>Signal</th>
+            <th>e5</th>
+            <th>e13</th>
+            <th>e50</th>
+            <th>e200</th>
+            <th>e800</th>
+          </tr>
+          <tr v-for="row in table" class="hover">
+            <td>{{row[0]}}</td>
+            <td>{{row[1].Date}}</td>
+            <td>{{row[1].O}}</td>
+            <td>{{row[1].H}}</td>
+            <td>{{row[1].L}}</td>
+            <td>{{row[1].C}}</td>
+            <td>{{row[1].V}}</td>
+            <td :class="'Up'| Sharkfin(row[1].Up, row[1].Rsi)">{{row[1].Up}}</td>
+            <td :class="'Low'| Sharkfin(row[1].Low, row[1].Rsi)">{{row[1].Low}}</td>
+            <td :class="'bs'| Base(row[1].Base)">{{row[1].Base}}</td>
+            <td :class="'bs'| rsi(row[1].Rsi)">{{row[1].Rsi}}</td>
+            <td>{{row[1].Signal}}</td>
+            <td>{{row[1].e5}}</td>
+            <td>{{row[1].e13}}</td>
+            <td>{{row[1].e50}}</td>
+            <td>{{row[1].e200}}</td>
+            <td>{{row[1].e800}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="Pos2">
+      <div class="dataView">
+        <h1>{{min}}</h1>
+        <table>
+          <tr>
+            <th>Pair</th>
+            <th>Time</th> <!-- in js this is called Date -->
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Up</th>
+            <th>Low</th>
+            <th>Base</th>
+            <th>Rsi</th>
+            <th>Signal</th>
+            <th>e5</th>
+            <th>e13</th>
+            <th>e50</th>
+            <th>e200</th>
+            <th>e800</th>
+          </tr>
+          <tr v-for="row in table" class="hover">
+            <td>{{row[0]}}</td>
+            <td>{{row[1].Date}}</td>
+            <td>{{row[1].O}}</td>
+            <td>{{row[1].H}}</td>
+            <td>{{row[1].L}}</td>
+            <td>{{row[1].C}}</td>
+            <td>{{row[1].V}}</td>
+            <td :class="'Up'| Sharkfin(row[1].Up, row[1].Rsi)">{{row[1].Up}}</td>
+            <td :class="'Low'| Sharkfin(row[1].Low, row[1].Rsi)">{{row[1].Low}}</td>
+            <td :class="'bs'| Base(row[1].Base)">{{row[1].Base}}</td>
+            <td :class="'bs'| rsi(row[1].Rsi)">{{row[1].Rsi}}</td>
+            <td>{{row[1].Signal}}</td>
+            <td>{{row[1].e5}}</td>
+            <td>{{row[1].e13}}</td>
+            <td>{{row[1].e50}}</td>
+            <td>{{row[1].e200}}</td>
+            <td>{{row[1].e800}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="Pos3">
+      <div class="dataView">
+        <h1>{{min}}</h1>
+        <table>
+          <tr>
+            <th>Pair</th>
+            <th>Time</th> <!-- in js this is called Date -->
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Up</th>
+            <th>Low</th>
+            <th>Base</th>
+            <th>Rsi</th>
+            <th>Signal</th>
+            <th>e5</th>
+            <th>e13</th>
+            <th>e50</th>
+            <th>e200</th>
+            <th>e800</th>
+          </tr>
+          <tr v-for="row in table" class="hover">
+            <td>{{row[0]}}</td>
+            <td>{{row[1].Date}}</td>
+            <td>{{row[1].O}}</td>
+            <td>{{row[1].H}}</td>
+            <td>{{row[1].L}}</td>
+            <td>{{row[1].C}}</td>
+            <td>{{row[1].V}}</td>
+            <td :class="'Up'| Sharkfin(row[1].Up, row[1].Rsi)">{{row[1].Up}}</td>
+            <td :class="'Low'| Sharkfin(row[1].Low, row[1].Rsi)">{{row[1].Low}}</td>
+            <td :class="'bs'| Base(row[1].Base)">{{row[1].Base}}</td>
+            <td :class="'bs'| rsi(row[1].Rsi)">{{row[1].Rsi}}</td>
+            <td>{{row[1].Signal}}</td>
+            <td>{{row[1].e5}}</td>
+            <td>{{row[1].e13}}</td>
+            <td>{{row[1].e50}}</td>
+            <td>{{row[1].e200}}</td>
+            <td>{{row[1].e800}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="Pos4">
+      <div class="dataView">
+        <h1>{{min}}</h1>
+        <table>
+          <tr>
+            <th>Pair</th>
+            <th>Time</th> <!-- in js this is called Date -->
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Up</th>
+            <th>Low</th>
+            <th>Base</th>
+            <th>Rsi</th>
+            <th>Signal</th>
+            <th>e5</th>
+            <th>e13</th>
+            <th>e50</th>
+            <th>e200</th>
+            <th>e800</th>
+          </tr>
+          <tr v-for="row in table" class="hover">
+            <td>{{row[0]}}</td>
+            <td>{{row[1].Date}}</td>
+            <td>{{row[1].O}}</td>
+            <td>{{row[1].H}}</td>
+            <td>{{row[1].L}}</td>
+            <td>{{row[1].C}}</td>
+            <td>{{row[1].V}}</td>
+            <td :class="'Up'| Sharkfin(row[1].Up, row[1].Rsi)">{{row[1].Up}}</td>
+            <td :class="'Low'| Sharkfin(row[1].Low, row[1].Rsi)">{{row[1].Low}}</td>
+            <td :class="'bs'| Base(row[1].Base)">{{row[1].Base}}</td>
+            <td :class="'bs'| rsi(row[1].Rsi)">{{row[1].Rsi}}</td>
+            <td>{{row[1].Signal}}</td>
+            <td>{{row[1].e5}}</td>
+            <td>{{row[1].e13}}</td>
+            <td>{{row[1].e50}}</td>
+            <td>{{row[1].e200}}</td>
+            <td>{{row[1].e800}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="Pos5">
+      <div class="dataView">
+        <h1>{{min}}</h1>
+        <table>
+          <tr>
+            <th>Pair</th>
+            <th>Time</th> <!-- in js this is called Date -->
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Up</th>
+            <th>Low</th>
+            <th>Base</th>
+            <th>Rsi</th>
+            <th>Signal</th>
+            <th>e5</th>
+            <th>e13</th>
+            <th>e50</th>
+            <th>e200</th>
+            <th>e800</th>
+          </tr>
+          <tr v-for="row in table" class="hover">
+            <td>{{row[0]}}</td>
+            <td>{{row[1].Date}}</td>
+            <td>{{row[1].O}}</td>
+            <td>{{row[1].H}}</td>
+            <td>{{row[1].L}}</td>
+            <td>{{row[1].C}}</td>
+            <td>{{row[1].V}}</td>
+            <td :class="'Up'| Sharkfin(row[1].Up, row[1].Rsi)">{{row[1].Up}}</td>
+            <td :class="'Low'| Sharkfin(row[1].Low, row[1].Rsi)">{{row[1].Low}}</td>
+            <td :class="'bs'| Base(row[1].Base)">{{row[1].Base}}</td>
+            <td :class="'bs'| rsi(row[1].Rsi)">{{row[1].Rsi}}</td>
+            <td>{{row[1].Signal}}</td>
+            <td>{{row[1].e5}}</td>
+            <td>{{row[1].e13}}</td>
+            <td>{{row[1].e50}}</td>
+            <td>{{row[1].e200}}</td>
+            <td>{{row[1].e800}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="Pos6">
+      <div class="dataView">
+        <h1>{{min}}</h1>
+        <table>
+          <tr>
+            <th>Pair</th>
+            <th>Time</th> <!-- in js this is called Date -->
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Up</th>
+            <th>Low</th>
+            <th>Base</th>
+            <th>Rsi</th>
+            <th>Signal</th>
+            <th>e5</th>
+            <th>e13</th>
+            <th>e50</th>
+            <th>e200</th>
+            <th>e800</th>
+          </tr>
+          <tr v-for="row in table" class="hover">
+            <td>{{row[0]}}</td>
+            <td>{{row[1].Date}}</td>
+            <td>{{row[1].O}}</td>
+            <td>{{row[1].H}}</td>
+            <td>{{row[1].L}}</td>
+            <td>{{row[1].C}}</td>
+            <td>{{row[1].V}}</td>
+            <td :class="'Up'| Sharkfin(row[1].Up, row[1].Rsi)">{{row[1].Up}}</td>
+            <td :class="'Low'| Sharkfin(row[1].Low, row[1].Rsi)">{{row[1].Low}}</td>
+            <td :class="'bs'| Base(row[1].Base)">{{row[1].Base}}</td>
+            <td :class="'bs'| rsi(row[1].Rsi)">{{row[1].Rsi}}</td>
+            <td>{{row[1].Signal}}</td>
+            <td>{{row[1].e5}}</td>
+            <td>{{row[1].e13}}</td>
+            <td>{{row[1].e50}}</td>
+            <td>{{row[1].e200}}</td>
+            <td>{{row[1].e800}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="Pos7">
+      <div class="dataView">
+        <h1>{{min}}</h1>
+        <table>
+          <tr>
+            <th>Pair</th>
+            <th>Time</th> <!-- in js this is called Date -->
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Up</th>
+            <th>Low</th>
+            <th>Base</th>
+            <th>Rsi</th>
+            <th>Signal</th>
+            <th>e5</th>
+            <th>e13</th>
+            <th>e50</th>
+            <th>e200</th>
+            <th>e800</th>
+          </tr>
+          <tr v-for="row in table" class="hover">
+            <td>{{row[0]}}</td>
+            <td>{{row[1].Date}}</td>
+            <td>{{row[1].O}}</td>
+            <td>{{row[1].H}}</td>
+            <td>{{row[1].L}}</td>
+            <td>{{row[1].C}}</td>
+            <td>{{row[1].V}}</td>
+            <td :class="'Up'| Sharkfin(row[1].Up, row[1].Rsi)">{{row[1].Up}}</td>
+            <td :class="'Low'| Sharkfin(row[1].Low, row[1].Rsi)">{{row[1].Low}}</td>
+            <td :class="'bs'| Base(row[1].Base)">{{row[1].Base}}</td>
+            <td :class="'bs'| rsi(row[1].Rsi)">{{row[1].Rsi}}</td>
+            <td>{{row[1].Signal}}</td>
+            <td>{{row[1].e5}}</td>
+            <td>{{row[1].e13}}</td>
+            <td>{{row[1].e50}}</td>
+            <td>{{row[1].e200}}</td>
+            <td>{{row[1].e800}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="Pos8">
+      <div class="dataView">
+        <h1>{{min}}</h1>
+        <table>
+          <tr>
+            <th>Pair</th>
+            <th>Time</th> <!-- in js this is called Date -->
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Up</th>
+            <th>Low</th>
+            <th>Base</th>
+            <th>Rsi</th>
+            <th>Signal</th>
+            <th>e5</th>
+            <th>e13</th>
+            <th>e50</th>
+            <th>e200</th>
+            <th>e800</th>
+          </tr>
+          <tr v-for="row in table" class="hover">
+            <td>{{row[0]}}</td>
+            <td>{{row[1].Date}}</td>
+            <td>{{row[1].O}}</td>
+            <td>{{row[1].H}}</td>
+            <td>{{row[1].L}}</td>
+            <td>{{row[1].C}}</td>
+            <td>{{row[1].V}}</td>
+            <td :class="'Up'| Sharkfin(row[1].Up, row[1].Rsi)">{{row[1].Up}}</td>
+            <td :class="'Low'| Sharkfin(row[1].Low, row[1].Rsi)">{{row[1].Low}}</td>
+            <td :class="'bs'| Base(row[1].Base)">{{row[1].Base}}</td>
+            <td :class="'bs'| rsi(row[1].Rsi)">{{row[1].Rsi}}</td>
+            <td>{{row[1].Signal}}</td>
+            <td>{{row[1].e5}}</td>
+            <td>{{row[1].e13}}</td>
+            <td>{{row[1].e50}}</td>
+            <td>{{row[1].e200}}</td>
+            <td>{{row[1].e800}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="Pos9">
+      <div class="dataView">
+        <h1>{{min}}</h1>
+        <table>
+          <tr>
+            <th>Pair</th>
+            <th>Time</th> <!-- in js this is called Date -->
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Up</th>
+            <th>Low</th>
+            <th>Base</th>
+            <th>Rsi</th>
+            <th>Signal</th>
+            <th>e5</th>
+            <th>e13</th>
+            <th>e50</th>
+            <th>e200</th>
+            <th>e800</th>
+          </tr>
+          <tr v-for="row in table" class="hover">
+            <td>{{row[0]}}</td>
+            <td>{{row[1].Date}}</td>
+            <td>{{row[1].O}}</td>
+            <td>{{row[1].H}}</td>
+            <td>{{row[1].L}}</td>
+            <td>{{row[1].C}}</td>
+            <td>{{row[1].V}}</td>
+            <td :class="'Up'| Sharkfin(row[1].Up, row[1].Rsi)">{{row[1].Up}}</td>
+            <td :class="'Low'| Sharkfin(row[1].Low, row[1].Rsi)">{{row[1].Low}}</td>
+            <td :class="'bs'| Base(row[1].Base)">{{row[1].Base}}</td>
+            <td :class="'bs'| rsi(row[1].Rsi)">{{row[1].Rsi}}</td>
+            <td>{{row[1].Signal}}</td>
+            <td>{{row[1].e5}}</td>
+            <td>{{row[1].e13}}</td>
+            <td>{{row[1].e50}}</td>
+            <td>{{row[1].e200}}</td>
+            <td>{{row[1].e800}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    var socket = io.connect();
+
+    var container = {
+      table1m: {min: String, data: Array},
+      table5m: {min: String, data: Array},
+      table15m: {min: String, data: Array},
+      table30m: {min: String, data: Array},
+      table60m: {min: String, data: Array},
+      table240m: {min: String, data: Array},
+      table1440m: {min: String, data: Array},
+      table10080m: {min: String, data: Array},
+      table43200m: {min: String, data: Array}
+    };
+
+    function initDataSocket(Dir, link, ObjKey, txt) {
+      socket.on(Dir, (json) => {
+        var dataArray = Object.keys(json).map(function (key) {
+          return [key, json[key]]
+        });
+        container[ObjKey].min = txt;
+        container[ObjKey].data = dataArray;
+        link.table = container[ObjKey].data;
+        link.min = container[ObjKey].min;
+      })
+    };
+
+    Vue.filter('rsi', function(value, second){
+      if(second >= 63){
+        return 'alert';
+      } else if (second <= 37) {
+        return 'alert';
+      }
+    })
+
+    Vue.filter('Sharkfin', function(value, band, rsi){
+        if (value == 'Low') {
+          if(rsi <= band){
+            return 'alert';
+          }
+        } else if(rsi >= band){
+          return 'alert';
+        }
+      })
+
+      Vue.filter('Base', function(value, band){
+        if(band >= 63){
+          return 'alert';
+        }else if (band <= 37) {
+          return 'alert';
+        }
+      })
+
+    var Pos1 = new Vue({
+      el:"#Pos1",
+      data: {
+        table: "loading",
+        min: "loading"
+      }
+    })
+    var Pos2 = new Vue({
+      el:"#Pos2",
+      data: {
+        table: "loading",
+        min: "loading"
+      }
+    })
+    var Pos3 = new Vue({
+      el:"#Pos3",
+      data: {
+        table: "loading",
+        min: "loading"
+      }
+    })
+    var Pos4 = new Vue({
+      el:"#Pos4",
+      data: {
+        table: "loading",
+        min: "loading"
+      }
+    })
+    var Pos5 = new Vue({
+      el:"#Pos5",
+      data: {
+        table: "loading",
+        min: "loading"
+      }
+    })
+    var Pos6 = new Vue({
+      el:"#Pos6",
+      data: {
+        table: "loading",
+        min: "loading"
+      }
+    })
+
+    var Pos7 = new Vue({
+      el:"#Pos7",
+      data: {
+        table: "loading",
+        min: "loading"
+      }
+    })
+
+    var Pos8 = new Vue({
+      el:"#Pos8",
+      data: {
+        table: "loading",
+        min: "loading"
+      }
+    })
+
+    var Pos9 = new Vue({
+      el:"#Pos9",
+      data: {
+        table: "loading",
+        min: "loading"
+      }
+    })
+
+    new Vue({
+      el:"#test",
+      data: {
+        msg: "80.875",
+      }
+    })
+
+    initDataSocket('Dir1', Pos1, "table1m", "1m");
+    initDataSocket('Dir5', Pos2, "table5m", "5m");
+    initDataSocket('Dir15', Pos3, "table15m", "15m");
+    initDataSocket('Dir30', Pos4, "table30m", "30m");
+    initDataSocket('Dir60', Pos5, "table60m", "1h");
+    initDataSocket('Dir240', Pos6, "table240m", "4h");
+    initDataSocket('Dir1440', Pos7, "table1440m", "1D");
+    initDataSocket('Dir10080', Pos8, "table10080m", "1W");
+    initDataSocket('Dir43200', Pos9, "table43200m", "1M");
+  </script>
+</html>
